@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Lecture 10</h1>
+<canvas id="myCanvas" width="400" height="400">
+
+</canvas>
+<script src="snowman.js"></script>
+<script>
+    const ctx = myCanvas.getContext('2d');
+    const minX = 170;
+    const rangeX = 60;
+    let p=0;
+
+    const bow = new Image();
+    bow.src ="bow.png";
+
+    const song=new Audio("Jingle.mp3");
+
+    document.addEventListener('keydown', function(info){
+        if(info.code='Space'){
+            song.play();
+        }
+      
+    })
+
+    myCanvas.addEventListener("mousemove", function(info){
+        p=info.offsetX/myCanvas.width;
+    })
+    animate();
+
+    function animate(){
+        
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+        drawSnowman(200,640,160,0.7);
+        //drawing the dynamic eyes
+        const x=minX + rangeX * p;
+        ctx.beginPath();
+        ctx.arc(x-25,170,15,0,Math.PI*2);
+        ctx.arc(x+25,170,15,0,Math.PI*2);
+        ctx.fill();
+
+        ctx.drawImage(bow,150,225,100,60);
+
+        ctx.font="40px comic Sans MS";
+        ctx.textAlign="center";
+        ctx.textAlign="middle";
+        ctx.fillText("Merry",200,310);
+        ctx.fillText("Christmas",200,360);
+
+        requestAnimationFrame(animate);
+    }
+</script>
+</body>
+</html>
+
+
